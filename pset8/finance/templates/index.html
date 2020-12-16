@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Name</th>
+                    <th>Shares</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                    <th>TOTAL</th>
+                </tr>
+                <tfoot>
+                    <tr>
+                        <td colspan="5"></td>
+                        <td>${{ cash_Total }}</td>
+                    </tr>
+                </tfoot>
+                {% for i in stock_table %}
+                    <tbody>
+                        <td>{{ i["Symbol"] }}</td>
+                        <td>{{ i["Name"] }}</td>
+                        <td>{{ i["Shares"] }}</td>
+                        <td>${{ i["Price"] }}</td>
+                        <td>
+                            <a href="/buy?symbol={{ i["Symbol"] }}" class="btn btn-primary btn-sm" role ="button">BUY</a>
+                            <a href="/sell?symbol={{ i["Symbol"] }}" class="btn btn-primary btn-sm" role ="button">SELL</a>
+                        </td>
+                        <td>${{ i["TOTAL"] }}</td>
+
+                    </tbody>
+                {% endfor %}
+                  <tr>
+                      <td colspan="5" align="left">CASH</td>
+                      <td>${{cash}}</td>
+                  </tr>
+            </thead>
+        </table>
+{% endblock %}
+
+<!--目前這個index的版本是?-->
+

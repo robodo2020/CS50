@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Shares</th>
+                    <th>Price</th>
+                    <th>Transcated</th>
+                </tr>
+                <tfoot>
+                </tfoot>
+                {% for i in history_table %}
+                    <tbody>
+                        <td>{{ i["Symbol"] }}</td>
+                        <td>{{ i["Shares"] }}</td>
+                        <td>{{ i["Price"] }}</td>
+                        <td>{{ i["Transcated"] }}</td>
+                    </tbody>
+                {% endfor %}
+                  <tr>
+                  </tr>
+            </thead>
+        </table>
+{% endblock %}
+
+<!--目前這個index的版本是?-->
+
