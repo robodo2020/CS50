@@ -1,7 +1,0 @@
-*.env
-*.pyc
-*.pickle
-*.json
-templates/fullcalendar.html
-templates/layout.html
-testhsr.py
