@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\demix\OneDrive\文件\Workspace\CS50\pset8\finance\.venv
+set VIRTUAL_ENV=C:\Users\demix\OneDrive\文件\Workspace\CS50\pset8 (Information & Web track)\finance\.venv
 
 if not defined PROMPT set PROMPT=$P$G
 
