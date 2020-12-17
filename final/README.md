@@ -17,12 +17,12 @@ Here can setup some default value for you to edit a new event
 
 
 2. Click the <i class="fa fa-edit"></i> button to edit your **Home address** and **Work address**. It will help you to search for the address. 
-![](https://i.imgur.com/FZ4oOJ2.png =300x150)
+![](https://i.imgur.com/FZ4oOJ2.png=300x150)
 3. Click the **"Add"** and **"Delete"** button to and other address you frequently-used.
-![](https://i.imgur.com/dLEXtTu.png =300x150)
+![](https://i.imgur.com/dLEXtTu.png=300x150)
 
 4. Click the **Edit** button to setup your Preference **Commute Mode** and **Time Zone**.
-![](https://i.imgur.com/6XYHXts.png =300x160)
+![](https://i.imgur.com/6XYHXts.png=300x160)
 `(Note: The Commute Mode will be the default one for adding a new event, you can still select other options if needed.)`
 
 ### SCHEDULE
@@ -32,13 +32,13 @@ This page is for adding new events, getting departure time and commute time. You
 1. Click the **"New Event"** button
 2. Edit the event info such as Title, Date, Time, Destination, and Description.
 3. Select the where you will departure. If you will leave from home, just not need to change it.
-![](https://i.imgur.com/ALApHbv.png =260x340)
+![](https://i.imgur.com/ALApHbv.png=260x340)
 
     - if you select **"Other"**, you can use other places not in your labels.
-    ![](https://i.imgur.com/TrJDUtH.png =200x150)
+    ![](https://i.imgur.com/TrJDUtH.png=200x150)
 
 4. Select the Commute Mode you plan to go to the event. Your preference mode (you set in SETTING page) will be the first choice as well.
-![](https://i.imgur.com/sSPZukD.png =200x90)
+![](https://i.imgur.com/sSPZukD.png=200x90)
 
 5. Click the **"Save"** button after you complete.
 
