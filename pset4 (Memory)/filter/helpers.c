@@ -24,7 +24,6 @@ void swap(RGBTRIPLE *front, RGBTRIPLE *end)
     return;
 }
 
-//TODO 反轉
 // Reflect image horizontally
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
@@ -46,39 +45,39 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
     return;
 }
 
-float checkcornerside(int *i, int *j, int *newH, int *newW)  //這裏做的事有必要用指標嘛？
+float checkcornerside(int *i, int *j, int *newH, int *newW) 
 {
-    //判斷corner左上，右上，左下，右下
+    // check the 4 corner of one image
     if ((*i == 1 && *j == 1) || (*i == 1 && *j == *newW - 2) || (*i == *newH - 2 && *j == 1) || (*i == *newH - 2 && *j == *newW - 2))
     {
         return 4.0;
     }
-    //判斷邊邊，上，下，左，右
+    //check the 4 side(left, right, top, down) of one image
     else if ((*i == 1 && (*j > 1 && *j < *newW - 2)) || (*i == *newH - 2 && (*j > 1 && *j < *newW - 2)) || (*j == 1 && (*i > 1
              && *i < *newH - 2)) || (*j == *newW - 2 && (*i > 1 && *i < *newH - 2)))
     {
         return 6.0;
     }
-    //剩下部分
+    //the remaining one
     else
     {
         return 9.0;
     }
 }
 
-//處理邊緣爲0
+//make the ege become 0
 void zerocornerside(int newH, int newW, RGBTRIPLE temp[newH][newW])
 {
     for (int j = 0; j < newW; j++)
     {
-        temp[0][j].rgbtBlue = temp[0][j].rgbtGreen = temp[0][j].rgbtRed = 0; //上方
-        temp[newH - 1][j].rgbtBlue = temp[newH - 1][j].rgbtGreen = temp[newH - 1][j].rgbtRed = 0;//下方
+        temp[0][j].rgbtBlue = temp[0][j].rgbtGreen = temp[0][j].rgbtRed = 0; //deal with up
+        temp[newH - 1][j].rgbtBlue = temp[newH - 1][j].rgbtGreen = temp[newH - 1][j].rgbtRed = 0;//deal with down
     }
-    //處理左右方
+    //deal with left and right
     for (int i = 0; i < newH; i++)
     {
-        temp[i][0].rgbtBlue = temp[i][0].rgbtGreen = temp[i][0].rgbtRed = 0; //左方
-        temp[i][newW - 1].rgbtBlue = temp[i][newW - 1].rgbtGreen = temp[i][newW - 1].rgbtRed = 0; //右方
+        temp[i][0].rgbtBlue = temp[i][0].rgbtGreen = temp[i][0].rgbtRed = 0; //left
+        temp[i][newW - 1].rgbtBlue = temp[i][newW - 1].rgbtGreen = temp[i][newW - 1].rgbtRed = 0; //right
     }
 }
 
@@ -90,7 +89,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     RGBTRIPLE temp[newH][newW];
 
     //temp[newH][newW] = *putcenter(height, width, image);
-    //把old image 放在temp正中間
+    //put old image in the center of temp
     for (int i = 1; i < newH - 1; i++)
     {
         for (int j = 1; j < newW - 1; j++)
@@ -98,13 +97,11 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             temp[i][j] = image[i - 1][j - 1];
         }
     }
-    //這裏function包不起來QQ
 
-
-    //處理邊緣爲0
+    //make the ege become 0
     zerocornerside(newH, newW, temp);
 
-    //模糊處理算法
+    //blur algorithm
     for (int i = 1; i < newH - 1; i++)
     {
         for (int j = 1; j < newW - 1; j++)
@@ -112,8 +109,6 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             float rgbtBlue, rgbtGreen, rgbtRed;
             rgbtBlue = rgbtGreen = rgbtRed = 0.0;
             float avg = checkcornerside(&i, &j, &newH, &newW);
-
-            //計算，然後擺回去
             for (int k = -1; k <= 1; k++)
             {
                 rgbtBlue += (temp[i + k][j - 1].rgbtBlue + temp[i + k][j].rgbtBlue + temp[i + k][j + 1].rgbtBlue);
@@ -131,7 +126,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
 ////////////////////////////////////// Detect edges //////////////////////////////
 
-//將9宮格pixel按照Sobel operator algorithm計算
+//Use Sobel operator algorithm to deal with the 9 grid
 int SobelCal(int i, int j, int newH, int newW, RGBTRIPLE temp[newH][newW], int a)
 {
     float Gx[3][3] = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
@@ -172,7 +167,7 @@ int SobelCal(int i, int j, int newH, int newW, RGBTRIPLE temp[newH][newW], int a
     return Gnum;
 }
 
-//整合計算最後輸出RGB的值
+//integrate and output the final RGB value
 float GValueCal(float GxRGB, float GyRGB)
 {
     float GValue = 0.0;
@@ -192,17 +187,15 @@ float GValueCal(float GxRGB, float GyRGB)
 }
 
 
-//TODO
 // Detect edges
 void edges(int height, int width, RGBTRIPLE image[height][width])
 {
-    //怎麼簡化 怎麼變成call function讓edges跟blur都可以用?
 
     int newH = height + 2;
     int newW = width + 2;
     RGBTRIPLE temp[newH][newW];
 
-    //把old image 放在temp正中間
+    //put old image inside temp
     for (int i = 1; i < newH - 1; i++)
     {
         for (int j = 1; j < newW - 1; j++)
@@ -211,7 +204,6 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
         }
     }
 
-    //處理邊緣爲0
     zerocornerside(newH, newW, temp);
 
     //edge detection algorithm calculation
@@ -222,21 +214,21 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int j = 1; j < newW - 1; j++)
         {
-            //處理藍色
+            //deal with blue
             a = 1;
             GxBlue = SobelCal(i, j, newH, newW, temp, a);
             a = 4;
             GyBlue = SobelCal(i, j, newH, newW, temp, a);
             image[i - 1][j - 1].rgbtBlue = round(GValueCal(GxBlue, GyBlue));
 
-            //處理綠色
+            //deal with green
             a = 2;
             GxGreen = SobelCal(i, j, newH, newW, temp, a);
             a = 5;
             GyGreen = SobelCal(i, j, newH, newW, temp, a);
             image[i - 1][j - 1].rgbtGreen = round(GValueCal(GxGreen, GyGreen));
 
-            //紅色
+            //deal with red
             a = 3;
             GxRed = SobelCal(i, j, newH, newW, temp, a);
             a = 6;

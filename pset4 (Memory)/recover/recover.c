@@ -18,14 +18,14 @@ int main(int argc, char *argv[])
         printf("Usage: ./recover card.raw\n");
         return 1;
     }
-    FILE *file = fopen(argv[1], "r");   //是指打開後存到 *file內嗎?  -->對 讀取argv的內容存到file內
+    FILE *file = fopen(argv[1], "r");   
     if (!file)
     {
         printf("Load file error..\n");
         return 1;
     }
 
-    /////////////// easter egg XD //////////////////
+    /////////////// easter egg  //////////////////
     char *infile = argv[1];
     FILE *inptr = fopen(infile, "r");
     char ch;
@@ -34,24 +34,24 @@ int main(int argc, char *argv[])
     printf("%c", ch);
     }
     printf("\n");
-    /////////////// easter egg XD //////////////////
+    /////////////// easter egg //////////////////
 
 
     int num = 0;
-    char filename[8]; //因為是 ###.jpg\0  所以共8碼
+    char filename[8]; //since the file name is ###.jpg\0 , it's filename[8]
     int newjpeg = 0;
     FILE *img = NULL;
-    //TODO Look for beginning of a JPEG
-    while (fread(buffer, BufferSize, 1,  file) == 1)   //當可以讀取512byte時 代表還沒到file end
+    // Look for beginning of a JPEG
+    while (fread(buffer, BufferSize, 1,  file) == 1)   //when read 512byte, means haven't reachfile end
     {
-        //Write 512 bytes until a new JPEG is found 代表為新的jpg file
-        if (JPEGcheck())  //進入代表有新的jpeg 或是第一個jpeg檔案
+        //Write 512 bytes until a new JPEG is found 
+        if (JPEGcheck())  //if there's new jpeg file
         {
-            if (newjpeg == 1)  //後續會進到這個條件表示JPEGcheck又進入了，表示有新的JPEG
+            if (newjpeg == 1)  //if there's new JPEG
             {
                 fclose(img);
             }
-            else              //只有第一個jpeg會進來這邊
+            else              //only the first jpeg file goes here
             {
                 newjpeg = 1;
             }
@@ -67,7 +67,8 @@ int main(int argc, char *argv[])
             num++;
         }
 
-        //一直寫入當前檔案 ，因為jpeg會在第一張之後接續存入，只要jpegcheck條件進入一次的話，後面就都是存進去了
+        //keep writing the current file since the jpeg file will save continously after the first jpeg file
+        //when jpegcheck is true, save every jpeg file after
         if (newjpeg == 1)
         {
             fwrite(buffer, BufferSize, 1, img);
@@ -88,11 +89,6 @@ bool JPEGcheck(void)
     //printf("%03x, %03x %03x\n", buffer[0], buffer[1], buffer[2]);
     return (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0);
 
-
-
-    //直接用return 就可以直接判斷後面內容的 true false了!!
-
-    //就不需要下面這裡
     //if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0)
         //return true;
     //else

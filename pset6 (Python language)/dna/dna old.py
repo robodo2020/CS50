@@ -28,22 +28,22 @@ if len(argv) != 3:
     print("Usage: python dna.py data.csv sequence.txt")
     exit(1)
 
-# TODO open file typed in terminal
+# open file typed in terminal
 namefile = open(argv[1], "r")
 dnafile = open(argv[2], "r")
 
-# TODO seperate each line and store line in list ex:namelist[0]代表一整行 #可以用csv...
-namedata = namefile.readlines()  # namedata 一整堆資料
+# seperate each line and store line in list ex:namelist[0] means one line, but can use csv...
+namedata = namefile.readlines()  # namedata 
 namelist = []
 for i in namedata:
     namelist.append(i)
-# TODO 拆開第一行 取出STR序列規則供後續用
-dnaSTR = re.split(r'[,\n]', namelist[0])  # bug: 目前還不知道怎麼去除\n
+# separate the first line in order to get STR sequence rule for using
+dnaSTR = re.split(r'[,\n]', namelist[0]) 
 
-# 讀取DNA序列
+# read DNA sequence
 whosdna = dnafile.readline()
 
-# 判斷DNA序列裡面的STR最長連續有幾個
+# check the longest STR inside DNA sequence
 DNAresult = []
 for i in range(1, len(dnaSTR) - 1, 1):
     DNAresult.append(MaxContinuousSTR(i))

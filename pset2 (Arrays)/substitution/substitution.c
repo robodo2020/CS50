@@ -9,7 +9,7 @@
 int main(int argc, char *argv[])
 {
 //validate the key
-    //string GetKey = "";   //在使用string時直接這樣就好 不用string[]會報錯
+    //string GetKey = "";  
     string GetKey = argv[1];
     if (argc == 2)
     {
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     else
     {
         printf("Usage: ./substitution key\n");
-        return 1;//告知電腦this program did not succeed
+        return 1;//this program did not succeed
     }
     
         
@@ -80,17 +80,17 @@ int main(int argc, char *argv[])
     string original = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     if (duplicate == true)
     {
-        string EncryptText = get_string("plaintext:");  //欲輸入字為hello
-        int len = strlen(EncryptText);          //這兩行搞死我QQ
-        char CipherText[len];                   //這兩行搞死我QQ
-        for (int s = 0; s <= len; s++)          //為什麼s<len就會使output有問題-->string儲存時會自動加上\0,而char的沒有 才會造成問題
+        string EncryptText = get_string("plaintext:");  
+        int len = strlen(EncryptText);          
+        char CipherText[len];                   
+        for (int s = 0; s <= len; s++)         
         {
-            //處理大寫
+            //deal with Upper Case
             if (isupper(EncryptText[s]))
             {
                 for (int m = 0; m < 26; m++)      
                 {
-                    if (toupper(EncryptText[s]) == original[m])//if Encrypt[0]  h, =original的 7
+                    if (toupper(EncryptText[s]) == original[m])
                     {
                         CipherText[s] = toupper(GetKey[m]);
                         //printf("%c",CipherText[s]);
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
                     }        
                 }
             }
-            //處理小寫
+            // deal with Lower Case
             else if (islower(EncryptText[s]))
             {
                 for (int m = 0; m < 26; m++)      
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
                     }        
                 }
             }
-            //處理數字&標點符號
+            //deal with number & symbol
             else
             {
                 CipherText[s]  = EncryptText[s];

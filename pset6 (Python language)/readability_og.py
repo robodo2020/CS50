@@ -10,10 +10,10 @@ L = S = index = 0
 WordNum = 1
 for i in range(len(text)):
     # Count for sentences
-    if re.search("\!|\.|\?", text[i]):  # 找特殊字元方式加上\
+    if re.search("\!|\.|\?", text[i]):  
         SentenceNum += 1
     # Count for words
-    if re.search(" |'", text[i]):   # 記得要判斷I've是兩個字, 但如果是'S要排除
+    if re.search(" |'", text[i]):   # I've => 2 word
         WordNum += 1
         if text[i] == "\'" and text[i + 1] == 's':
             WordNum -= 1

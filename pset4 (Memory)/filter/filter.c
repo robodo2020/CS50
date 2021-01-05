@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "helpers.h"        //感覺可以透過helpers.h 把 helpers.c的東西打包
+#include "helpers.h"        
 
 int main(int argc, char *argv[])
 {

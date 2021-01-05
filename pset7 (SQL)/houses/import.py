@@ -3,16 +3,16 @@ from sys import *
 import cs50
 import csv
 
-# TODO Check command-line argument
+# Check command-line argument
 if len(argv) != 2:
     print("Usage: python import.py characters.csv")
     exit(1)
-# TODO Open CSV file by command arg
+# Open CSV file by command arg
 studentlist = []
 with open(argv[1], newline='') as studentdata:
     studentlist = list(csv.reader(studentdata, delimiter=','))
 # print(studentlist)
-# TODO For each row, parse name
+# For each row, parse name
 name = []
 for i in range(1, len(studentlist), 1):
     name.append(studentlist[i][0])
@@ -23,7 +23,7 @@ for i in range(len(name)):
     # add null
     if len(namesep[i]) == 2:
         namesep[i].insert(1, None)
-    namesep[i].insert(3, studentlist[i+1][1])  # +1 因為studentlist[i]是table name
+    namesep[i].insert(3, studentlist[i+1][1])  # +1 since studentlist[i] is table name
     namesep[i].insert(4, studentlist[i+1][2])
 # print(namesep)
 

@@ -28,9 +28,9 @@ if len(argv) != 3:
     print("Usage: python dna.py data.csv sequence.txt")
     exit(1)
 
-# TODO open file typed in terminal
+# open file typed in terminal
 dnafile = open(argv[2], "r")
-whosdna = dnafile.readline()  # 讀取DNA序列
+whosdna = dnafile.readline()  # read DNA sequence
 
 with open(argv[1], newline='') as namefile:
     # csv output is iterator over rows and don't support index, so need to use list()
@@ -38,7 +38,7 @@ with open(argv[1], newline='') as namefile:
 
 dnaSTR = namelist[0]
 
-# 判斷DNA序列裡面的STR最長連續有幾個
+# check the longest STR inside DNA
 DNAresult = []
 for i in range(1, len(dnaSTR), 1):
     DNAresult.append(MaxContinuousSTR(i))

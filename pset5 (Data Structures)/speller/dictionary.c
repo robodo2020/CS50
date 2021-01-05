@@ -18,15 +18,13 @@
 // Represents a node in a hash table
 typedef struct node
 {
-    char word[LENGTH + 1];    //LENGTH = 45程式自動設定的?為啥是45(設定單字最長不能超過45)
+    char word[LENGTH + 1];    //LENGTH = 45, set the max len = 45
     struct node *next;
 }
 node;
 
 // Number of buckets in hash table
-//要改只能從這裡改 不能從程式加上去
-
-// Hash table   n會預設成1 之後要讓hash table 更大 就改變N
+// Hash table   n default is 1, change N if make hash table bigger
 node *table[N];
 
 
@@ -36,10 +34,6 @@ node *table[N];
 bool check(const char *word)
 {
 
-    //為何一定要加\0才能被檢測到? 為何需要\0 跟tolower?
-    //原因: 因為dictionary裡面字元全部都是小寫，在hash()內有針對每個字母去計算對應數值，所以就算兩個字 字數相同，但還是會放到不同bucket
-    //那這邊為了要還原回去 照著dictionary(全部都小寫)的方式去hash() 所以才會需要用到tolower
-    //  \0則是跟記憶體儲存方式有關
     // Creates copy of word on which hash function can be performed
 
     int n = strlen(word);
@@ -77,14 +71,15 @@ unsigned int hash(const char *word)
 {
     unsigned long int value = 0;
     unsigned int i = 0;
-    unsigned int word_len = strlen(word);     //用字的長度去hash
+    unsigned int word_len = strlen(word);     //use word len to hash
     for (; i < word_len; i++)
     {
-        //printf("key[]\n", key[i]);   比如"em" key[0] = e, key[1] = m; ACSII碼下，key[0] = 101, key[1] =109
-        value = value * 37 + word[i];  //why *37? 算是一種整理hash function的方式，實際使用不一定需要
+        //printf("key[]\n", key[i]);   
+        //ex:"em" key[0] = e, key[1] = m; in ACSII, key[0] = 101, key[1] =109
+        value = value * 37 + word[i];  
 
         //value = (value << 2) ^ word[i];
-        //上面會得到101* 37 + 109 = 3846
+        //it gets 101* 37 + 109 = 3846
     }
     //printf("alphabet:%d \n", alphabet);
     value = value % N;
@@ -98,13 +93,13 @@ unsigned int hash(const char *word)
     // return value % N;
 }
 
-// Loads dictionary into memory, returning true if successful else false 用字母第一位
+// Loads dictionary into memory, returning true if successful else false
 
 int countword = 0;
 
 bool load(const char *dictionary)
 {
-    // TODO 1. Open the dictionary file
+    // 1. Open the dictionary file
     FILE *ftr = fopen(dictionary, "r");
     if (!ftr)
     {
@@ -112,12 +107,12 @@ bool load(const char *dictionary)
         return false;
     }
 
-    //TODO 2. Read String from file
+    // 2. Read String from file
     char dic[LENGTH + 1];
 
     while (fscanf(ftr, "%s", dic) != EOF)
     {
-        //TODO 3. Create a New node
+        // 3. Create a New node
         node *newword = malloc(sizeof(node));
         if (newword == NULL)
         {
@@ -127,11 +122,11 @@ bool load(const char *dictionary)
         strcpy(newword->word, dic);
         newword->next = NULL;
 
-        //TODO 4. Hash the word
+        // 4. Hash the word
         int slot;
         slot = hash(newword->word);
 
-        //Todo 5. Insert Node into Hash table
+        // 5. Insert Node into Hash table
         if (table[slot] == NULL)
         {
             table[slot] = newword;
@@ -139,7 +134,7 @@ bool load(const char *dictionary)
         }
         else
         {
-            newword->next = table[slot];    //讓newword當第一個
+            newword->next = table[slot];    //make newword the first
             table[slot] = newword;
             countword++;
         }

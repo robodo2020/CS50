@@ -9,7 +9,7 @@
 
 // Undefine any definitions
 #undef calculate
-#undef getrusage    //好像是用來橋接在dictionary.c裡面寫的function
+#undef getrusage    
 
 // Default dictionary
 #define DICTIONARY "dictionaries/large"

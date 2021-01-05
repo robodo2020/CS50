@@ -1,7 +1,6 @@
 #include <cs50.h>
 #include <stdio.h>
 #include <string.h>
-//嘗試把上課觀念加進去，不要用以前的想法
 // Max number of candidates
 #define MAX 9
 bool back = false;
@@ -52,7 +51,7 @@ int main(int argc, string argv[])
     {
         string name = get_string("Vote: ");
         // Check for invalid vote
-        if (!vote(name))  //當vote(name)返回值不為true 就會invalid
+        if (!vote(name))  
         {
             printf("Invalid vote.\n");
         }
@@ -65,9 +64,7 @@ int main(int argc, string argv[])
 // Update vote totals given a new vote
 bool vote(string name)
 {
-    // TODO
-    //在candidate內找name
-    //If有找到 candidates[i].votes +1; return true
+    // find name in candidate
     for (int i = 0; i < candidate_count ; i++)
     {
         if (strcmp(candidates[i].name, name) == 0)
@@ -77,18 +74,12 @@ bool vote(string name)
         }
 
     }
-    //若沒找到
     return false;
-
-    //return放的位置為啥是這樣 一開始一直導致錯誤
-    //
 }
 
 // Print the winner (or winners) of the election
 void print_winner(void)
 {
-    // TODO找到票數最多的，print it’s name
-    //若同時最高票有兩人，兩人都要print
     int winnervote = 0;
 
     for (int i = 0; i < candidate_count ; i++)

@@ -5,7 +5,7 @@
 // Max number of candidates
 #define MAX 9
 
-// preferences[i][j] is number of voters who prefer i over j 多少人認為i打j贏
+// preferences[i][j] is number of voters who prefer i over j 
 int preferences[MAX][MAX];
 
 // locked[i][j] means i is locked in over j
@@ -45,7 +45,7 @@ int main(int argc, string argv[])
         return 1;
     }
 
-    // Populate array of candidates 寫入candidate名稱而已
+    // Populate array of candidates
     candidate_count = argc - 1;
     if (candidate_count > MAX)
     {
@@ -102,25 +102,21 @@ int main(int argc, string argv[])
 // Update ranks given a new vote
 bool vote(int rank, string name, int ranks[])
 {
-    // TODO 找name對不對，如果有找到，update ranks並return true ranks[i]是排序，候選人是ABC的話 目前判斷0是A 1是B 2是C
+    
     for (int i = 0; i < candidate_count ; i++)
     {
-        //if 找到name符合
         if (strcmp(candidates[i], name) == 0)
         {
             ranks[rank] = i;
             return true;
         }
     }
-    //若沒找到
     return false;
 }
 
-// Update preferences given one voter's ranks 用來更新preference[i][j]
+// Update preferences given one voter's ranks
 void record_preferences(int ranks[])
 {
-    // TODO
-    //recursion solution 還沒想到嗚嗚
     int a = 0;
     if (a == candidate_count)
     {
@@ -133,22 +129,9 @@ void record_preferences(int ranks[])
         preferences[ranks[a]][ranks[i]] += 1;
         a ++;
     }
-    //preference[][] += 1;
-    
-
-
-    //iteration solution
-    //for (int j = 0; j < candidate_count ; j++)
-    //{
-    //    for (int k = j + 1; k < candidate_count ; k++)
-    //    {
-    //        preferences[ranks[j]][ranks[k]] += 1;
-    //    }
-    //}
-
 }
 
-// Record pairs of candidates where one is preferred over the other  計算有幾組pairs嗎?
+// Record pairs of candidates where one is preferred over the other 
 void add_pairs(void)
 {
     // TODO
@@ -177,23 +160,19 @@ void add_pairs(void)
 }
 
 // Sort pairs in decreasing order by strength of victory
-//排序pairs[]讓其從贏最多的排序到贏最少的
 void sort_pairs(void)
 {
-    // TODO
     //sort pair[]
     //preferences
-    int BfSwap[pair_count]; //紀錄每個pair的輸贏
+    int BfSwap[pair_count]; //record every win/lose of pair
     for (int i = 0; i < pair_count; i ++)
     {
-        //算出每個pair內輸贏的差距
+        //calculate the win/lose in each pair
         BfSwap[i] = preferences[pairs[i].winner][pairs[i].loser] - preferences[pairs[i].loser][pairs[i].winner];
     }
-    //用bubble sort試試
     int SwapCounter = 1;
     while (SwapCounter != 0)
     {
-        //Swap 由大排到小
         for (int i = pair_count; i > 0; i --)
         {
             SwapCounter = 0;
@@ -208,7 +187,7 @@ void sort_pairs(void)
 
                     int temp1 =  BfSwap[j];
                     BfSwap[j] = BfSwap[j + 1];
-                    BfSwap[j + 1] = temp1;    //不懂 為啥測資需要這三行才會過關?
+                    BfSwap[j + 1] = temp1; 
                 }
             }
         }
@@ -221,7 +200,6 @@ void sort_pairs(void)
 
 bool thereiscycle(int front, int end, int start)
 {
-    //base case
     if (end == start)
     {
         return true;
@@ -243,33 +221,29 @@ bool thereiscycle(int front, int end, int start)
 
 
 // Lock pairs into the candidate graph in order, without creating cycles
-// 用二維矩陣之true false 來代表cycle graph
 void lock_pairs(void)
 {
     // TODO locked[i][j]
     for (int i = 0; i < pair_count; i ++)
     {
-        locked[pairs[i].winner][pairs[i].loser] = true; //建立 pointed graph
-        if (thereiscycle(pairs[i].winner, pairs[i].loser, pairs[i].winner))//如果建下去後發現有cycle
+        locked[pairs[i].winner][pairs[i].loser] = true; //create pointed graph
+        if (thereiscycle(pairs[i].winner, pairs[i].loser, pairs[i].winner))//if found cycle
         {
-            locked[pairs[i].winner][pairs[i].loser] = false; //就不建
+            locked[pairs[i].winner][pairs[i].loser] = false; // then not create
         }
         //printf("%i",pair_count);
         //printf("winner:%i, loser:%i\n", pairs[i].winner, pairs[i].loser);
 
     }
-    //有cycle
+    //if there is cycle
     return;
 }
 
 // Print the winner of the election
-// source 沒有人指向他 也是最後winner
-//如何判斷是否cycle，拿掉最weak的 locked[j][i] 從weakest拿掉，直到有人完全沒有true的方式看看
+
 void print_winner(void)
 {
-    // TODO
-    //沒有cycle的狀況
-    // TODO
+
     int checkwinner[candidate_count];
     for (int i = 0; i < candidate_count; i ++)
     {

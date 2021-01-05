@@ -6,30 +6,30 @@ while True:
     if number > 0:
         break
 digit = len(str(number))
-digitArray = list(str(number))  # 注意這邊儲存的是string的 list 所以要做計算時一定要做轉換
+digitArray = list(str(number)) 
 odd = 0
 even = 0
-#  檢查位數是否正確
+#  chekc whether the digit is correct
 if digit in [13, 15, 16, 3]:
-    # 檢查開頭
+    # check the head
     if(re.search("^5[1-5]", str(number)) or re.search("^34|37", str(number)) or re.search("4", str(number))):
-        # 跑Luhn算法，這邊注意，i是在digitArray裡面loop，
-        # 所以i會等於 digitArray[0,1,2..]的數，因此如果for內用digitArray[i]處理會報錯
+        # use Luhn algorithm，i loop inside digitArray
+        # Therefore, i == digitArray[0,1,2..]
         for i in digitArray[digit - 2: -1: -2]:
             print("in1")
             odd = odd + (int(i) * 2 // 10) + (int(i) * 2 % 10)
         for j in digitArray[digit - 1: -1: -2]:
             print("in2")
             even = even + int(j)
-        # 跑Luhn算法
+        # use Luhn algorithm
         total = odd + even
         if total % 10 == 0:
-            # 最後檢查屬於哪個卡 print出結果
+            # check and print the result for the card
             if digit == 15:
                 print("AMEX")
-            elif digit == 13 or (digit == 16 and int(digitArray[0]) == 4):  # 因為digitArray是string 所以要比對要轉成int
+            elif digit == 13 or (digit == 16 and int(digitArray[0]) == 4):  # since type(digitArray) == string, change to int
                 print("VISA")
-            elif digit == 16 and digitArray[0] == '5':  # 或者不轉用'5'也可以
+            elif digit == 16 and digitArray[0] == '5': 
                 print("MASTERCARD")
             else:
                 print("INVALID")
