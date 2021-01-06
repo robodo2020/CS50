@@ -71,7 +71,7 @@ def index():
     # add all price to total
 
 
-    return render_template("index.html", stock_table = stock_table, cash_Total  = cash_Total, cash = cash)
+    return render_template("index.html", stock_table = stock_table, cash_Total  = float('%.2f' %cash_Total), cash = cash)
 
 # Change Password
 
@@ -262,12 +262,20 @@ def quote():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
+    
     if request.method == "GET":
         return render_template("register.html")
     else:
         username = request.form.get("name")
         password = request.form.get("password")
         passwordagain = request.form.get("passwordagain")
+        # check same username
+        userlist = []
+        UserNameList = db.execute("SELECT username FROM users")
+        for i in range(len(UserNameList)):
+            userlist.append(UserNameList[i]['username'])
+        if username in userlist:
+            return apology("User name already exists.", 400)
         if password == passwordagain:
             hashpassword = generate_password_hash(password)
             sql = "INSERT INTO users (username, hash) VALUES (%s,%s)"
